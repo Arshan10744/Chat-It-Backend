@@ -1,10 +1,25 @@
 import express from "express";
-import { createGroupChat, myChats } from "../controllers/chat.js";
+import {
+  addMembers,
+  createGroupChat,
+  getMyGroups,
+  myChats,
+  removeMembers,
+} from "../controllers/chat.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 
 const app = express.Router();
 
-app.post("/group",isAuthenticated, createGroupChat);
-app.get("/mychats",isAuthenticated, myChats)
+app.use(isAuthenticated);
+
+app.post("/group", createGroupChat);
+
+app.get("/myChats", myChats);
+
+app.get("/myGroupChats", getMyGroups);
+
+app.put("/addMembers", addMembers);
+
+app.put("/removeMember", removeMembers);
 
 export default app;
